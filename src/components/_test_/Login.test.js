@@ -1,25 +1,26 @@
-import { fireEvent, render, screen, waitFor, wait } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor, wait, cleanup } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import Login, { validateEmail } from '../Login';
+import axios from "axios";
 import nock from 'nock';
+import { NavigationClient } from "@azure/msal-browser";
 
 
 describe('Test login component', () => {
-    it('checks if returned data from API rendered into component', async () => {
-        nock('https://api.fake-rest.refine.dev')
-            .defaultReplyHeaders({
-                'access-control-allow-origin': '*',
-            })
-            .get('/users/1')
-            .reply(200, {
-                id: 1,
-                firstName: "Sri",
-            });
-        render(<Login />);
-        await waitFor(() => {
-            expect(screen.getByText(/Sri/i)).toBeInTheDocument();
-        });
+
+    beforeAll(() => {
+        jest.spyOn(axios,'get').mockResolvedValueOnce({id: 1, firstName: 'sri'}).
+        mockRejectedValueOnce('Something went wrong')
     });
+
+    afterAll(cleanup);
+
+    it('checking post', () => {
+        jest.spyOn(axios,'post').mockResolvedValueOnce({id: 1, firstName: 'sri'}).
+        mockRejectedValueOnce('Something went wrong')
+    });
+
+
     test('two buttons should present', async () => {
         render(<Login />);
         const buttonList = await screen.findAllByRole("button");

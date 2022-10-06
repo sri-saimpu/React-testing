@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Form, Button, Alert } from "react-bootstrap";
+import axios from "axios";
 
 const Login = () => {
   const [email, setEmail] = useState();
@@ -9,19 +10,13 @@ const Login = () => {
   const [state, setState] = useState({firstName: ''});
 
 
-  const fetchData = async () => {
-    const response = await fetch(
-        'https://api.fake-rest.refine.dev/users/1'
-    );
-    const result = await response.json();
-    return result;
-  };
+  async function fetchData() {
+    const response = await axios.get('https://api.fake-rest.refine.dev/users/1');
+  }
 
     React.useEffect(() => {
-        (async () => {
-            const data = await fetchData();
-            setState(data);
-        })();
+      const data = fetchData();
+      setState(data);
     }, []);
 
   const handleSubmit = (e) => {
