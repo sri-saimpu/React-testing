@@ -8,7 +8,7 @@ const Login = () => {
   const [error, setError] = useState("");
   const [showUser, setShowUser] = useState(false);
   const [state, setState] = useState({firstName: ''});
-
+  const [role, setRole] = useState();
 
   async function fetchData() {
     const response = await axios.get('https://api.fake-rest.refine.dev/users/1');
@@ -24,8 +24,10 @@ const Login = () => {
     e.preventDefault();
 
     if (validateEmail(email)) {
+      const {role} = validateEmail(email);
       setShowUser(true);
       setError("");
+      setRole(role);
       return;
     }
     setError("Email is not valid");
@@ -36,15 +38,16 @@ const Login = () => {
     setEmail("");
     setPassword("");
     setShowUser(false);
+    setRole('');
   };
 
   return (
     <>
-      <h2>We will Test the Login Form Component {state.firstName}</h2>
+      <h2>We will Test the Login Form Component</h2>
       {showUser && (
-        <Alert data-testid="user" variant="success">
-          {email}
-        </Alert>
+      <Alert data-testid="user" variant="success">
+        {email}
+      </Alert>
       )}
       {error && (
         <Alert data-testid="error" variant="danger">
@@ -83,6 +86,8 @@ const Login = () => {
         >
           Reset
         </Button>
+        {(role === 'admin') && <Button data-testid="passwordReset" variant="primary" style={{ marginLeft: "5px" }}>Reset Password</Button>}
+        {(role === 'user') && <Button data-testid="passwordResetDisabled" disabled style={{ marginLeft: "5px", cursor: 'not-allowed' }}>Reset Password</Button>}
       </Form>
     </>
   );
@@ -90,9 +95,13 @@ const Login = () => {
 
 export const validateEmail = (email) => {
   const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
-  if (regex.test(email)) {
+  if (regex.test(email) && email.includes('admin')) {
+    return {status:true, role:'admin'};
+  } else if(regex.test(email) && email.includes('user')){
+    return {status:true, role:'user'};
+  } else if(regex.test(email)){
     return true;
-  }
+  } 
   return false;
 };
 

@@ -2,8 +2,6 @@ import { fireEvent, render, screen, waitFor, wait, cleanup } from "@testing-libr
 import userEvent from "@testing-library/user-event";
 import Login, { validateEmail } from '../Login';
 import axios from "axios";
-import nock from 'nock';
-import { NavigationClient } from "@azure/msal-browser";
 
 
 describe('Test login component', () => {
@@ -14,11 +12,6 @@ describe('Test login component', () => {
     });
 
     afterAll(cleanup);
-
-    it('checking post', () => {
-        jest.spyOn(axios,'post').mockResolvedValueOnce({id: 1, firstName: 'sri'}).
-        mockRejectedValueOnce('Something went wrong')
-    });
 
 
     test('two buttons should present', async () => {
@@ -45,20 +38,66 @@ describe('Test login component', () => {
         expect(password).toHaveAttribute("type","password");
     });
 
-    test("should be able to login the form", () => {
+    test("User with invalid mail id should not be able to login", async () => {
+        render(<Login />);
+        const email = screen.getByPlaceholderText("Enter email");
+        userEvent.type(email,"sri.com");
+        const submitButton = screen.getByTestId("submit");
+        userEvent.click(submitButton);
+        expect(screen.getByText(/not valid/i)).toBeInTheDocument();
+    });
+
+    test("admin should be able to login the form and reset password", async () => {
         render(<Login />);
         const submitButton = screen.getByTestId("submit");
         const emailInputNode = screen.getByPlaceholderText("Enter email");
         const passwordInputNode = screen.getByPlaceholderText("Password");
+
+        userEvent.type(emailInputNode, "sriadmin@gmail.com");
+        userEvent.type(passwordInputNode, "123445");
+        userEvent.click(submitButton);
+        const userInfo = screen.getByText("sriadmin@gmail.com");
+        const buttonList = await screen.findAllByRole("button");
+
+        expect(userInfo).toBeInTheDocument();
+        expect(buttonList.length).toBe(3);
+    });
+
+    test("user should not be able to access password reset button", async () => {
+        render(<Login />);
+        const submitButton = screen.getByTestId("submit");
+        const emailInputNode = screen.getByPlaceholderText("Enter email");
+        const passwordInputNode = screen.getByPlaceholderText("Password");
+
+        userEvent.type(emailInputNode, "sriuser@gmail.com");
+        userEvent.type(passwordInputNode, "123445");
+        userEvent.click(submitButton);
+        const userInfo = screen.getByText("sriuser@gmail.com");
+        const buttonList = await screen.findAllByRole("button");
+
+        expect(userInfo).toBeInTheDocument();
+        expect(buttonList.length).toBe(3);
+        const passwordResetButton = screen.getByTestId("passwordResetDisabled");
+        expect(passwordResetButton).toHaveAttribute("disabled");
+    });
+
+    test("user with personal mailId shouldn't see the option to reset password", async () => {
+        render(<Login />);
+        const submitButton = screen.getByTestId("submit");
+        const emailInputNode = screen.getByPlaceholderText("Enter email");
+        const passwordInputNode = screen.getByPlaceholderText("Password");
+
         userEvent.type(emailInputNode, "sri@gmail.com");
         userEvent.type(passwordInputNode, "123445");
-
         userEvent.click(submitButton);
         const userInfo = screen.getByText("sri@gmail.com");
-        expect(userInfo).toBeInTheDocument();
-    })
+        const buttonList = await screen.findAllByRole("button");
 
-    test("should be able to reset the form", () => {
+        expect(userInfo).toBeInTheDocument();
+        expect(buttonList.length).toBe(2);
+    });
+
+    test("user should be able to reset the form", () => {
         const {getByTestId} = render(<Login />);
         const resetButton = getByTestId("reset");
         const emailInputNode = screen.getByPlaceholderText("Enter email");
