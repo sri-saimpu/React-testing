@@ -32,7 +32,7 @@ describe('Test login component', () => {
         expect(email.value).toMatch("sri@gmail.com");
     });
 
-    test("passport input should have type passport", () => {
+    test("password input should have type password", () => {
         render(<Login />);
         const password = screen.getByPlaceholderText("Password");
         expect(password).toHaveAttribute("type","password");
@@ -63,7 +63,7 @@ describe('Test login component', () => {
         expect(buttonList.length).toBe(3);
     });
 
-    test("user should not be able to access password reset button", async () => {
+    test("user with office mailId should not be able to access password reset button", async () => {
         render(<Login />);
         const submitButton = screen.getByTestId("submit");
         const emailInputNode = screen.getByPlaceholderText("Enter email");
