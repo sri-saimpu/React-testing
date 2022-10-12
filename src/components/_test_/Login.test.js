@@ -20,22 +20,18 @@ describe('Test login component', () => {
         expect(buttonList.length).toBe(2);
     });
 
-    test("should failed on email validation", () => {
-        const testEmail = "sri.com";
-        expect(validateEmail(testEmail)).not.toBe(true); 
+    test("password input should have type password", () => {
+        render(<Login />);
+        const password = screen.getByPlaceholderText("Password");
+        expect(password).toHaveAttribute("type","password");
     });
+
 
     test("email input field should accept email", () => {
         render(<Login />);
         const email = screen.getByPlaceholderText("Enter email");
         userEvent.type(email,"sri@gmail.com");
         expect(email.value).toMatch("sri@gmail.com");
-    });
-
-    test("password input should have type password", () => {
-        render(<Login />);
-        const password = screen.getByPlaceholderText("Password");
-        expect(password).toHaveAttribute("type","password");
     });
 
     test("User with invalid mail id should not be able to login", async () => {
@@ -63,7 +59,7 @@ describe('Test login component', () => {
         expect(buttonList.length).toBe(3);
     });
 
-    test("user with office mailId should not be able to access password reset button", async () => {
+    test("user mailId should not be able to access password reset button", async () => {
         render(<Login />);
         const submitButton = screen.getByTestId("submit");
         const emailInputNode = screen.getByPlaceholderText("Enter email");

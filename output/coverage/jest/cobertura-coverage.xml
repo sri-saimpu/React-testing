@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <!DOCTYPE coverage SYSTEM "http://cobertura.sourceforge.net/xml/coverage-04.dtd">
-<coverage lines-valid="103" lines-covered="40" line-rate="0.3883" branches-valid="24" branches-covered="20" branch-rate="0.8332999999999999" timestamp="1665329318513" complexity="0" version="0.1">
+<coverage lines-valid="104" lines-covered="41" line-rate="0.3942" branches-valid="26" branches-covered="22" branch-rate="0.8461" timestamp="1665398943187" complexity="0" version="0.1">
   <sources>
     <source>C:\Users\vinay\newproject</source>
   </sources>
@@ -54,7 +54,7 @@
         </class>
       </classes>
     </package>
-    <package name="src.components" line-rate="0.9285" branch-rate="1">
+    <package name="src.components" line-rate="0.9301999999999999" branch-rate="1">
       <classes>
         <class name="Login.js" filename="src\components\Login.js" line-rate="1" branch-rate="1">
           <methods>
@@ -85,17 +85,17 @@
             </method>
             <method name="(anonymous_5)" hits="68" signature="()V">
               <lines>
-                <line number="64" hits="68"/>
+                <line number="65" hits="68"/>
               </lines>
             </method>
             <method name="(anonymous_6)" hits="18" signature="()V">
               <lines>
-                <line number="74" hits="18"/>
+                <line number="75" hits="18"/>
               </lines>
             </method>
-            <method name="(anonymous_7)" hits="8" signature="()V">
+            <method name="(anonymous_7)" hits="7" signature="()V">
               <lines>
-                <line number="96" hits="8"/>
+                <line number="97" hits="7"/>
               </lines>
             </method>
           </methods>
@@ -127,18 +127,19 @@
             <line number="39" hits="1" branch="false"/>
             <line number="40" hits="1" branch="false"/>
             <line number="41" hits="1" branch="false"/>
-            <line number="44" hits="111" branch="false"/>
-            <line number="64" hits="68" branch="false"/>
-            <line number="74" hits="18" branch="false"/>
-            <line number="96" hits="2" branch="false"/>
-            <line number="97" hits="8" branch="false"/>
-            <line number="98" hits="8" branch="true" condition-coverage="100% (4/4)"/>
-            <line number="99" hits="2" branch="false"/>
-            <line number="100" hits="6" branch="true" condition-coverage="100% (4/4)"/>
-            <line number="101" hits="2" branch="false"/>
-            <line number="102" hits="4" branch="true" condition-coverage="100% (2/2)"/>
-            <line number="103" hits="2" branch="false"/>
-            <line number="105" hits="2" branch="false"/>
+            <line number="42" hits="1" branch="false"/>
+            <line number="45" hits="111" branch="false"/>
+            <line number="65" hits="68" branch="false"/>
+            <line number="75" hits="18" branch="false"/>
+            <line number="97" hits="2" branch="false"/>
+            <line number="98" hits="7" branch="false"/>
+            <line number="99" hits="7" branch="true" condition-coverage="100% (4/4)"/>
+            <line number="100" hits="2" branch="false"/>
+            <line number="101" hits="5" branch="true" condition-coverage="100% (4/4)"/>
+            <line number="102" hits="2" branch="false"/>
+            <line number="103" hits="3" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="104" hits="2" branch="false"/>
+            <line number="106" hits="1" branch="false"/>
           </lines>
         </class>
         <class name="api.js" filename="src\components\api.js" line-rate="0" branch-rate="1">

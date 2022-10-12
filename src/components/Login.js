@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Form, Button, Alert } from "react-bootstrap";
 import axios from "axios";
+import "../style.scss";
 
 const Login = () => {
   const [email, setEmail] = useState();
@@ -35,6 +36,7 @@ const Login = () => {
   };
 
   const resetForm = () => {
+    setError("");
     setEmail("");
     setPassword("");
     setShowUser(false);
@@ -43,7 +45,7 @@ const Login = () => {
 
   return (
     <>
-      <h2>We will Test the Login Form Component</h2>
+      <h2 color="text-color">We will Test the Login Form Component</h2>
       {showUser && (
       <Alert data-testid="user" variant="success">
         {email}
@@ -86,8 +88,8 @@ const Login = () => {
         >
           Reset
         </Button>
-        {(role === 'admin') && <Button data-testid="passwordReset" variant="primary" style={{ marginLeft: "5px" }}>Reset Password</Button>}
-        {(role === 'user') && <Button data-testid="passwordResetDisabled" disabled style={{ marginLeft: "5px", cursor: 'not-allowed' }}>Reset Password</Button>}
+        {(role === 'admin' && !error) && <Button data-testid="passwordReset" variant="primary" style={{ marginLeft: "5px" }}>Reset Password</Button>}
+        {(role === 'user' &&  !error) && <Button data-testid="passwordResetDisabled" disabled style={{ marginLeft: "5px", cursor: 'not-allowed' }}>Reset Password</Button>}
       </Form>
     </>
   );

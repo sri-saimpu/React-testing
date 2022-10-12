@@ -2,6 +2,7 @@ import React,{useEffect, useState, useMemo} from 'react';
 import axios from "axios";
 import {Col, Row} from "react-bootstrap";
 import Login from "./components/Login.js";
+import './style.scss';
 
 
 function App() {
